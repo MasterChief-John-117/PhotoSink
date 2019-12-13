@@ -1,12 +1,21 @@
 import sys
 import os
 import ntpath
+from json import JSONEncoder
+import json
+import re
 
 class Directory:
     def __init__(self, name):
         self.name = name
         self.images = []
         self.folders = []
+class DirectoryEncoder(JSONEncoder):
+    def default(self, object):
+        if isinstance(object, Directory):
+            return object.__dict__
+        else:
+            return json.JSONEncoder.default(self, object)
 
 def main():
     if len(sys.argv) != 2:
@@ -29,10 +38,13 @@ def traversedir(path: str, album_path: str, cache_path: str):
 
     for entry in os.scandir(path):
         if entry.is_dir():
-            #print("FOLDER!: " + entry.path.replace(album_path, cache_path))
+            curr_dir.folders.append(ntpath.basename(entry))
             traversedir(entry.path, album_path, cache_path)
-        #elif entry.is_file():
-            #print("File: " + entry.path.replace(album_path, cache_path))
+        elif entry.is_file():
+            if re.search("jpe?g$", entry.path):
+                curr_dir.images.append(ntpath.basename(entry.path))
+    
+    print(DirectoryEncoder().encode(curr_dir))
 
 
 if __name__ == "__main__":
