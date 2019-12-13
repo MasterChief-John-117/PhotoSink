@@ -65,11 +65,16 @@ def resize_image(original_path: str, album_path: str, cache_path: str):
     if resize_thumb or resize_med:
         original_image = Image.open(original_path)
         ratio = original_image.size[1] / original_image.size[0]
+        (width, height) = original_image.size
         if resize_thumb:
             print(f"Resizing {original_path} -> thumbnail")
-            thumb_size = (256, int(256*ratio))
-            thumb = original_image.resize(thumb_size)
-            thumb.save(thumb_image_path)
+            thumb = original_image
+            if width > height:
+                thumb = thumb.crop(((int((width-height)/2)), 0, (int((width+height)/2)), height))
+            elif height > width: 
+                thumb = thumb.crop((0, (int((height-width)/2)), width, (int((height+width)/2))))
+            thumb = thumb.resize((256, 256))
+            thumb.save(thumb_image_path)                
         if resize_med:
             print(f"Resizing {original_path} -> medium")
             med_size = (1024, int(1024*ratio))
