@@ -44,8 +44,9 @@ def traversedir(path: str, album_path: str, cache_path: str):
             if re.search("jpe?g$", entry.path):
                 curr_dir.images.append(ntpath.basename(entry.path))
     
-    print(DirectoryEncoder().encode(curr_dir))
-
+    indexfile = open(cache_dir+"/index.json", "w")
+    indexfile.write(DirectoryEncoder().encode(curr_dir))
+    indexfile.close()
 
 if __name__ == "__main__":
     main()
