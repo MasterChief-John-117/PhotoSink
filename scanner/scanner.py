@@ -74,12 +74,17 @@ def resize_image(original_path: str, album_path: str, cache_path: str):
             elif height > width: 
                 thumb = thumb.crop((0, (int((height-width)/2)), width, (int((height+width)/2))))
             thumb = thumb.resize((256, 256))
-            thumb.save(thumb_image_path, exif=original_image.info['exif'])                
+            try:
+                thumb.save(thumb_image_path, exif=original_image.info['exif'])                
+            except:
+                thumb.save(thumb_image_path)
         if resize_med:
             print(f"Resizing {original_path} -> medium")
             med_size = (1024, int(1024*ratio))
             med = original_image.resize(med_size)
-            med.save(med_image_path, exif=original_image.info['exif']) 
-
+            try:
+                med.save(med_image_path, exif=original_image.info['exif']) 
+            except:
+                med.save(med_image_path)
 if __name__ == "__main__":
     main()
