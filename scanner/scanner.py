@@ -4,6 +4,9 @@ import ntpath
 from json import JSONEncoder
 import json
 import re
+from PIL import Image
+
+Image.MAX_IMAGE_PIXELS = None
 
 class Directory:
     def __init__(self, name):
@@ -42,11 +45,36 @@ def traversedir(path: str, album_path: str, cache_path: str):
             traversedir(entry.path, album_path, cache_path)
         elif entry.is_file():
             if re.search("jpe?g$", entry.path):
+                resize_image(entry.path, album_path, cache_path)
                 curr_dir.images.append(ntpath.basename(entry.path))
     
-    indexfile = open(cache_dir+"/index.json", "w")
-    indexfile.write(DirectoryEncoder().encode(curr_dir))
-    indexfile.close()
+    with open(cache_dir+"/index.json", "w") as indexfile:
+        indexfile.write(DirectoryEncoder().encode(curr_dir))
+
+def resize_image(original_path: str, album_path: str, cache_path: str):
+    thumb_image_path = original_path.replace(album_path, cache_path) + ".thumb.jpg"
+    med_image_path = original_path.replace(album_path, cache_path) + ".med.jpg"
+    
+    resize_thumb = True
+    resize_med = True
+    if os.path.exists(thumb_image_path) and os.path.getmtime(thumb_image_path) > os.path.getmtime(original_path): # If the resized image was modified after the original
+        resize_thumb = False
+    if os.path.exists(med_image_path) and os.path.getmtime(med_image_path) > os.path.getmtime(original_path): # If the resized image was modified after the original
+        resize_med = False
+
+    if resize_thumb or resize_med:
+        original_image = Image.open(original_path)
+        ratio = original_image.size[1] / original_image.size[0]
+        if resize_thumb:
+            print(f"Resizing {original_path} -> thumbnail")
+            thumb_size = (256, int(256*ratio))
+            thumb = original_image.resize(thumb_size)
+            thumb.save(thumb_image_path)
+        if resize_med:
+            print(f"Resizing {original_path} -> medium")
+            med_size = (1024, int(1024*ratio))
+            med = original_image.resize(med_size)
+            med.save(med_image_path)    
 
 if __name__ == "__main__":
     main()
