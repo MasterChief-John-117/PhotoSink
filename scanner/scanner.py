@@ -44,7 +44,7 @@ def traversedir(path: str, album_path: str, cache_path: str):
             curr_dir.folders.append(ntpath.basename(entry))
             traversedir(entry.path, album_path, cache_path)
         elif entry.is_file():
-            if re.search("jpe?g$", entry.path):
+            if re.search("jpe?g$", entry.path, re.IGNORECASE):
                 resize_image(entry.path, album_path, cache_path)
                 curr_dir.images.append(ntpath.basename(entry.path))
     
@@ -73,7 +73,7 @@ def resize_image(original_path: str, album_path: str, cache_path: str):
                 thumb = thumb.crop(((int((width-height)/2)), 0, (int((width+height)/2)), height))
             elif height > width: 
                 thumb = thumb.crop((0, (int((height-width)/2)), width, (int((height+width)/2))))
-            thumb = thumb.resize((256, 256))
+            thumb = thumb.resize((256, 256), Image.ANTIALIAS)
             try:
                 thumb.save(thumb_image_path, exif=original_image.info['exif'])                
             except:
@@ -81,7 +81,7 @@ def resize_image(original_path: str, album_path: str, cache_path: str):
         if resize_med:
             print(f"Resizing {original_path} -> medium")
             med_size = (1024, int(1024*ratio))
-            med = original_image.resize(med_size)
+            med = original_image.resize(med_size, Image.ANTIALIAS)
             try:
                 med.save(med_image_path, exif=original_image.info['exif']) 
             except:
