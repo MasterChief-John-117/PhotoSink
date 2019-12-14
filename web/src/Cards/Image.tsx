@@ -7,6 +7,7 @@ interface IProps {
     path: string,
 }
 interface IState {
+
 }
 
 const Image: React.FunctionComponent<IProps> = (props) => {
@@ -15,7 +16,7 @@ const Image: React.FunctionComponent<IProps> = (props) => {
         <div className="card image">
             <a href={BASE_URL+"albums/"+path+name}>
                 <img src={BASE_URL+"cache/"+path+name+".thumb.jpg"}></img>
-                <p>{name.substring(0, name.lastIndexOf('.'))}</p>
+                
             </a>
         </div>
     )

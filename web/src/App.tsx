@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Gallery from './Gallery'
 import './App.css';
 import Directory from './Directory';
+import BASE_URL from './Constants'
 
 interface IProps {
 }
@@ -35,7 +36,8 @@ class App extends Component<IProps, IState> {
     {
       window.location.hash = window.location.hash+"/";
     }
-    fetch("http://localhost/cache/"+this.state.location+"/index.json".replace("//", "/"))
+
+    fetch(BASE_URL+("cache/"+this.state.location+"/index.json").replace("//", "/"))
     .then(result => {
         return result.text();    
     })
