@@ -1,4 +1,4 @@
-.imageFrame {
+.frame {
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
