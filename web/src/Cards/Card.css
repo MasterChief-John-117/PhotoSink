@@ -10,6 +10,7 @@
     background-color: indigo;
     padding: 0;
     margin: 0;
+    image-orientation: from-image;
 }
 .card p {
     margin: 0;
