@@ -21,6 +21,8 @@ class App extends Component<IProps, IState> {
 
   componentDidMount() {
     this.handleHashChange();
+    this.setState({location: window.location.hash.substring(window.location.hash.indexOf("/")+1)});
+
     window.addEventListener("hashchange", () => { 
       this.setState({location: window.location.hash.substring(window.location.hash.indexOf("/")+1)});
       console.log(this.state.location);
@@ -29,7 +31,7 @@ class App extends Component<IProps, IState> {
   }
 
   handleHashChange() {    
-    fetch("http://localhost/cache/"+this.state.location.replace(/^\/+|\/+$/g, '')+"/index.json")
+    fetch("http://localhost/cache/"+this.state.location.replace(/^\/+|\/+$/g, '')+"/index.json".replace("//", "/"))
     .then(result => {
         return result.text();    
     })
@@ -42,7 +44,7 @@ class App extends Component<IProps, IState> {
   render () {
       return (
       <div className="App">
-        <Gallery location={this.state.directory.name}/>
+        <Gallery directory={this.state.directory} path={this.state.location}/>
       </div>
     );
   }
