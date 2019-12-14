@@ -26,7 +26,10 @@ def main():
         return
 
     album_path = sys.argv[1].replace("\\", "/")
-    cache_path = album_path[0:album_path.rindex("/")]+"/cache"
+    cache_path = album_path
+    if album_path.endswith("/")
+        album_path = album_path[0:album_path.rindex("/")]
+    album_path = album_path[0:album_path.rindex("/")]+"/cache"
 
     if not os.path.exists(cache_path):
         os.makedirs(cache_path)
