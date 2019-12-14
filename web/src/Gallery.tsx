@@ -3,6 +3,7 @@ import Directory from './Directory'
 import AlbumFrame from './Frames/AlbumFrame';
 import ImageFrame from './Frames/ImageFrame';
 import './Gallery.css'
+import App from './App';
 
 interface IProps {
     directory: Directory,

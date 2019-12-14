@@ -8,14 +8,16 @@ interface IProps {
     path: string
 }
 interface IState {
-    albumImg: string
+    albumImg: string,
+    albumName: string,
 }
 
 class Album extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-          albumImg: ""
+          albumImg: "",
+          albumName: "",
         }
       }
     
@@ -24,6 +26,7 @@ class Album extends Component<IProps, IState> {
     }
 
     drillForImage(name: string, path: string): any {
+        this.setState({albumName: name});
         fetch(BASE_URL+("cache/"+path+"/"+name+"/index.json").replace("//", "/"))
         .then(result => {
             return result.text();    
@@ -44,6 +47,10 @@ class Album extends Component<IProps, IState> {
 
     render() {
         let {name, path} = this.props;
+        if(this.state.albumName !== name)
+        {
+            this.drillForImage(name, path);
+        }
         return (
             <div className="card album">
                 <a href={window.location+name+"/"}>
