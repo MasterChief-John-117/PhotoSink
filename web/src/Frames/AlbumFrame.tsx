@@ -4,6 +4,7 @@ import './Frame.css'
 
 interface IProps {
     folders: string[],
+    path: string,
 }
 interface IState {
 }
@@ -13,7 +14,7 @@ const AlbumFrame: React.FunctionComponent<IProps> = (props) => {
         <div className="frame albumFrame">
         {
             props.folders.map((folder) => {
-                return <Album name={folder}/>
+                return <Album name={folder} path={props.path}/>
             })
         }
         </div>

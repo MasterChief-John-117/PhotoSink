@@ -29,7 +29,7 @@ class Gallery extends Component<IProps, IState> {
         return(
             <div className="gallery">
                 <h1>{this.props.directory.name}</h1>
-                <AlbumFrame folders={directory.folders}/>
+                <AlbumFrame folders={directory.folders} path={path}/>
                 <ImageFrame images={directory.images} path={path}/>
             </div>
         )

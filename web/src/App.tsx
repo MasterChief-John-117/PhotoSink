@@ -30,8 +30,12 @@ class App extends Component<IProps, IState> {
     });
   }
 
-  handleHashChange() {    
-    fetch("http://localhost/cache/"+this.state.location.replace(/^\/+|\/+$/g, '')+"/index.json".replace("//", "/"))
+  handleHashChange() {
+    if(!window.location.hash.endsWith("/"))
+    {
+      window.location.hash = window.location.hash+"/";
+    }
+    fetch("http://localhost/cache/"+this.state.location+"/index.json".replace("//", "/"))
     .then(result => {
         return result.text();    
     })
