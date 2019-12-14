@@ -15,7 +15,6 @@ class Gallery extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-        directory: undefined,
     }
   }
 
@@ -31,7 +30,7 @@ class Gallery extends Component<IProps, IState> {
             <div className="gallery">
                 <h1>{this.props.directory.name}</h1>
                 <AlbumFrame folders={directory.folders}/>
-                <ImageFrame images={directory.images}/>
+                <ImageFrame images={directory.images} path={path}/>
             </div>
         )
     }
