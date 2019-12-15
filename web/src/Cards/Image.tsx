@@ -14,7 +14,7 @@ const Image: React.FunctionComponent<IProps> = (props) => {
     let {name, path} = props;
     return (
         <div className="card image">
-            <a href={BASE_URL+"albums/"+path+name}>
+            <a href={window.location+name}>
                 <img src={BASE_URL+"cache/"+path+name+".thumb.jpg"} alt={name}></img>
                 
             </a>
