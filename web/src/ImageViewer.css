@@ -4,4 +4,5 @@
 
 .imageViewer img {
     max-height: 75vh;
+    image-orientation: from-image;
 }
