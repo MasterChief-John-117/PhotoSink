@@ -12,6 +12,19 @@
     margin: 0;
     image-orientation: from-image;
 }
+
+@media screen and (max-width: 840px ) {
+    .card {
+        max-width: 128px;
+        max-height: 156px;
+    }
+
+    .card img { 
+        width: 128px;
+        height: 128px;
+    }
+}
+
 .card p {
     margin: 0;
 }
