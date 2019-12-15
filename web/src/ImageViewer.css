@@ -1,0 +1,7 @@
+.imageViewer h1 {
+    margin: 12px;
+}
+
+.imageViewer img {
+    max-height: 75vh;
+}

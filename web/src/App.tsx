@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Gallery from './Gallery'
 import './App.css';
 import Directory from './Directory';
-import BASE_URL from './Constants'
+import BASE_URL from './Constants';
+import ImageViewer from './ImageViewer';
 
 interface IProps {
 }
@@ -26,7 +27,6 @@ class App extends Component<IProps, IState> {
 
     window.addEventListener("hashchange", () => { 
       this.setState({location: window.location.hash.substring(window.location.hash.indexOf("/")+1)});
-      console.log(this.state.location);
       this.handleHashChange();
     });
   }
@@ -34,10 +34,16 @@ class App extends Component<IProps, IState> {
   handleHashChange() {
     if(!window.location.hash.endsWith("/"))
     {
-      window.location.hash = window.location.hash+"/";
+      if(!window.location.hash.match(/jpe?g$/gi)) {
+        window.location.hash = window.location.hash+"/";
+      }
     }
 
-    fetch(BASE_URL+("cache/"+this.state.location+"/index.json").replace("//", "/"))
+    let rootDir = this.state.location;
+    if(window.location.hash.match(/jpe?g$/gi)) {
+      rootDir = rootDir.substring(0, rootDir.lastIndexOf("/"))
+    }
+    fetch(BASE_URL+("cache/"+rootDir+"/index.json").replace("//", "/"))
     .then(result => {
         return result.text();    
     })
@@ -48,11 +54,24 @@ class App extends Component<IProps, IState> {
   }
 
   render () {
+    if(!window.location.hash.match(/jpe?g/gi)) {
       return (
-      <div className="App">
-        <Gallery directory={this.state.directory} path={this.state.location}/>
-      </div>
-    );
+        <div className="App">
+          <Gallery directory={this.state.directory} path={this.state.location}/>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="App">
+          <ImageViewer 
+            location={this.state.location} 
+            imageName={window.location.hash.substring(window.location.hash.lastIndexOf("/")+1)}
+            directory={this.state.directory}
+          />
+        </div>
+      )
+    }
   }
 }
 
