@@ -26,7 +26,6 @@ class Album extends Component<IProps, IState> {
     }
 
     drillForImage(name: string, path: string): any {
-        this.setState({albumName: name});
         fetch(BASE_URL+("cache/"+path+"/"+name+"/index.json").replace("//", "/"))
         .then(result => {
             return result.text();    
@@ -48,6 +47,7 @@ class Album extends Component<IProps, IState> {
         let {name, path} = this.props;
         if(this.state.albumName !== name)
         {
+            this.setState({albumName: name});
             this.drillForImage(name, path);
         }
         return (
