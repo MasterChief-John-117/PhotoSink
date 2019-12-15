@@ -53,7 +53,7 @@ class Album extends Component<IProps, IState> {
         return (
             <div className="card album">
                 <a href={window.location+name+"/"}>
-                    <img src={this.state.albumImg} />
+                    <img src={this.state.albumImg} alt={name}/>
                     <p>{name}</p>
                 </a>
             </div>

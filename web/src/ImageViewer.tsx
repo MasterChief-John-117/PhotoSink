@@ -2,7 +2,6 @@ import React from 'react';
 import BASE_URL from './Constants';
 import './ImageViewer.css';
 import Directory from './Directory';
-import { dirname } from 'path';
 
 interface IProps {
   location: string,
@@ -26,7 +25,7 @@ class ImageViewer extends React.Component<IProps, IState> {
         return (
             <div className="imageViewer">
                 <h1>{imageName}</h1>
-                <a href={BASE_URL+"albums/"+location}><img src={BASE_URL+"cache/"+location+".med.jpg"} /></a>
+                <a href={BASE_URL+"albums/"+location}><img src={BASE_URL+"cache/"+location+".med.jpg"} alt={imageName} /></a>
                 {directory.images != null ? (<p>{directory.images.length} images in folder</p>) : null}
             </div>
         )
