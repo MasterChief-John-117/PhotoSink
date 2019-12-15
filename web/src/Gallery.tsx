@@ -19,6 +19,21 @@ class Gallery extends Component<IProps, IState> {
     }
   }
 
+  getPrevDir(): string {
+    let dir = window.location.href;
+    if (dir.endsWith('/')) {
+        dir = dir.substring(0, dir.lastIndexOf('/'));
+    }
+    dir = dir.substring(0, dir.lastIndexOf('/'));
+    if (dir.indexOf("#") === -1) {
+        dir += "#/";
+    }
+    if(!dir.endsWith("/")) {
+        dir += "/";
+    }
+    return dir;
+  }
+
   render () { 
     let {directory, path} = this.props;
     if (directory.folders == null || directory.images == null || directory.name == null) {
@@ -29,7 +44,7 @@ class Gallery extends Component<IProps, IState> {
     else {
         return(
             <div className="gallery">
-                <h1>{this.props.directory.name}</h1>
+                <h1><a href={this.getPrevDir()}>{this.props.directory.name}</a></h1>
                 <AlbumFrame folders={directory.folders} path={path}/>
                 <ImageFrame images={directory.images} path={path}/>
             </div>

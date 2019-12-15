@@ -35,7 +35,6 @@ class Album extends Component<IProps, IState> {
             let newDir: Directory = JSON.parse(result);
             if(newDir.images.length > 0)
             {
-                console.log(path+name)
                 this.setState({albumImg: BASE_URL+("cache/"+path+"/"+name+"/"+newDir.images[Math.floor(Math.random()*newDir.images.length)]+".thumb.jpg").replace("//", "/")});
             }
             else if (newDir.folders.length > 0)
