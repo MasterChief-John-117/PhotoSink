@@ -9,16 +9,21 @@ interface IProps {
 interface IState {
 }
 
-const ImageFrame: React.FunctionComponent<IProps> = (props) => {
-    return (
-        <div className="frame imageFrame">
-        {
-            props.images.map((image) => {
-                return <Image name={image} path={props.path}/>
-            })
-        }
-        </div>
-    )
+class ImageFrame extends React.Component<IProps, IState> {
+    
+    render () {
+        let {images, path} = this.props;
+        images = images.sort();
+        return ( 
+            <div className="frame imageFrame">
+            {
+                images.map((image) => {
+                    return <Image name={image} path={path}/>
+                })
+            }
+            </div>
+        )
+    }
 }
 
 export default ImageFrame;
