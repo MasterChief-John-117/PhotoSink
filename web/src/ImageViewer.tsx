@@ -22,10 +22,10 @@ class ImageViewer extends React.Component<IProps, IState> {
 
     render () {
         let {location, imageName, directory} = this.props;
-
+        imageName = decodeURI(imageName).substring(0, decodeURI(imageName).lastIndexOf("."))
         return (
             <div className="imageViewer">
-                <h1>{decodeURI(imageName).substring(0, imageName.lastIndexOf(".")-2)}</h1>
+                <h1>{imageName}</h1>
                 <a href={BASE_URL+"albums/"+location}><img src={BASE_URL+"cache/"+location+".med.jpg"} /></a>
                 {directory.images != null ? (<p>{directory.images.length} images in folder</p>) : null}
             </div>
