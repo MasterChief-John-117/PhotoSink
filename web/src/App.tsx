@@ -43,6 +43,7 @@ class App extends Component<IProps, IState> {
     if(window.location.hash.match(/jpe?g$/gi)) {
       rootDir = rootDir.substring(0, rootDir.lastIndexOf("/"))
     }
+    this.setState({directory: JSON.parse("{\"Name\": \""+rootDir+"\"}")})
     fetch(BASE_URL+("cache/"+rootDir+"/index.json").replace("//", "/"))
     .then(result => {
         return result.text();    
